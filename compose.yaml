@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+
+  server:
+    container_name: server
+    build:
+      dockerfile: ./docker/server/nginx/Dockerfile
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - '80:80'
+    networks:
+      - starter_net
+
+  php:
+    container_name: php
+    build:
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./:/var/www/html
+    expose:
+      - "9000"
+    networks:
+      - starter_net
+
+  database:
+    container_name: postgres
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: main_db
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: root
+    volumes:
+      - database_data:/var/lib/postgresql
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+    networks:
+      - starter_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: unless-stopped
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+networks:
+  starter_net:
+
+volumes:
+  database_data:
+    name: database-data-volume
+  pgadmin_data:
+    name: pgadmin-data-volume
