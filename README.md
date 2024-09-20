@@ -202,3 +202,8 @@ composer cs-fixer
 
 composer cs-fixer-dry
 ```
+
+## Happy dev:
+
+hit on `http:localhost` and you should see the symfony default `welcome page`.
+and then Happy dev X).
