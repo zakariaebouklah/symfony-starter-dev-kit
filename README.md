@@ -95,12 +95,12 @@ return array (
 
 ```
 
-please change the `DATABASE_URL` value with ***'postgresql://root:password@127.0.0.1:5432/main_db/XXX?serverVersion=16&charset=utf8'***
+please change the `DATABASE_URL` value with ***'postgresql://root:password@database:5432/main_db/XXX?serverVersion=16&charset=utf8'***
 
 the docker setup has already created an empty database called `database`. if you want to change it, change the value of `DATABASE_URL` like
 
 ```
-'DATABASE_URL' => 'postgresql://root:password@127.0.0.1:5432/main_db/XXX?serverVersion=16&charset=utf8',
+'DATABASE_URL' => 'postgresql://root:password@database:5432/main_db/XXX?serverVersion=16&charset=utf8',
 ``` 
 where `XXX` is the new database name. then, run the command:
 
@@ -112,6 +112,15 @@ to create the new database.
 
 **PS**: 
 you can also simply make copy of the existing `.env` file and rename it to `.env.local` and customize settings like database config as shown above.
+
+## Visualize Database in pgAdmin Web UI:
+
+- hit `localhost:8888` 
+- right click on **Servers** > **Register** > **Server...**
+- fill pop-up with:
+  - server-name : (anything here)
+  - host-name/address : use gateway address from ```docker inspect postgres | grep '"Gateway":'```
+  - set password to the one chosen for postgres (`password` unless you changed it)
 
 ## Compile your frontend assets (JS & CSS) using webpack
 
