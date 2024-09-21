@@ -120,6 +120,7 @@ you can also simply make copy of the existing `.env` file and rename it to `.env
 - fill pop-up with:
   - server-name : (anything here)
   - host-name/address : use gateway address from ```docker inspect postgres | grep '"Gateway":'```
+    ![alt text](doc/image2.jpg)
   - set password to the one chosen for postgres (`password` unless you changed it)
 
 ## Compile your frontend assets (JS & CSS) using webpack
